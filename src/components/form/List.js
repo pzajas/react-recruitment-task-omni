@@ -1,14 +1,22 @@
 import Note from "./Note"
+import styled from "styled-components"
 
-const List = ({ notesList, setNotesList }) => {
+const StyledListContainer = styled.div``
+
+const StyledList = styled.li`
+  color: white;
+  list-style: none;
+`
+
+const List = ({ notesList, setNotesList, className }) => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <StyledListContainer className={className}>
       {notesList.map(note => (
-        <li key={note.id}>
+        <StyledList key={note.id}>
           <Note setNotesList={setNotesList} note={note} notesList={notesList} />
-        </li>
+        </StyledList>
       ))}
-    </div>
+    </StyledListContainer>
   )
 }
 

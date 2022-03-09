@@ -1,7 +1,9 @@
 import { useState } from "react"
-import List from "./List"
-
+import { Link, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
+import PrimaryButton from "../../elements/buttons/PrimaryButton"
+import List from "./List"
+import SingleNote from "./SingleNote"
 
 const StyledFormContainer = styled.div`
   padding: 3rem;
@@ -12,7 +14,6 @@ const StyledFormContainer = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   textarea {
     position: relative;
@@ -26,27 +27,11 @@ const StyledForm = styled.form`
       outline: none;
     }
   }
-
-  /* button {
-    position: absolute;
-    top: 25.5%;
-    right: 15.78rem;
-    
-  } */
 `
 
 const StyledButtonContainer = styled.div`
   width: 100%;
-  align-items: center;
-  justify-content: center;
   text-align: right;
-
-  button {
-    border: none;
-    padding: 0.5rem;
-    width: 5rem;
-    margin-bottom: 0.5rem;
-  }
 `
 
 const StyledList = styled(List)`
@@ -56,6 +41,8 @@ const StyledList = styled(List)`
 const Form = () => {
   const [noteText, setNoteText] = useState("")
   const [notesList, setNotesList] = useState([])
+  const [singleNote, setSingleNote] = useState([])
+  const [isSingleNote, setIsSingleNote] = useState(false)
 
   const handleTextChange = e => {
     setNoteText(e.target.value)
@@ -63,9 +50,13 @@ const Form = () => {
 
   const handleSubmitNote = e => {
     e.preventDefault()
-    setNotesList([...notesList, { text: noteText, id: Math.random() * 1000 }])
 
-    setNoteText("")
+    if (noteText.length !== 0) {
+      setNotesList([...notesList, { text: noteText, id: Math.random() * 1000 }])
+      setNoteText("")
+    } else {
+      alert("Add a note pwetty pwease!")
+    }
   }
 
   return (
@@ -73,10 +64,47 @@ const Form = () => {
       <StyledForm onSubmit={handleSubmitNote}>
         <textarea value={noteText} onChange={handleTextChange} />
         <StyledButtonContainer>
-          <button>Add note</button>
+          {isSingleNote ? (
+            <Link to="/">
+              <PrimaryButton isSingleNote={isSingleNote} setIsSingleNote={setIsSingleNote}>
+                Go Back
+              </PrimaryButton>
+            </Link>
+          ) : (
+            <PrimaryButton>Add note</PrimaryButton>
+          )}
         </StyledButtonContainer>
       </StyledForm>
-      <StyledList notesList={notesList} setNotesList={setNotesList} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <StyledList
+                notesList={notesList}
+                singleNote={singleNote}
+                isSingleNote={isSingleNote}
+                setIsSingleNote={setIsSingleNote}
+                setNotesList={setNotesList}
+                setSingleNote={setSingleNote}
+              />
+            </div>
+          }
+        />
+        <Route
+          path="/single"
+          element={
+            <SingleNote
+              isSingleNote={isSingleNote}
+              setIsSingleNote={setIsSingleNote}
+              notesList={notesList}
+              singleNote={singleNote}
+              setSingleNote={setSingleNote}
+              setNotesList={setNotesList}
+            />
+          }
+        />
+      </Routes>
     </StyledFormContainer>
   )
 }

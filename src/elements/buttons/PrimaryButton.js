@@ -8,12 +8,8 @@ const StyledPrimaryButton = styled.button`
   cursor: pointer;
 `
 
-const PrimaryButton = ({ children, isSingleNote, setIsSingleNote }) => {
-  const handleIsSingleNote = () => {
-    setIsSingleNote(!isSingleNote)
-  }
-
-  return <StyledPrimaryButton onClick={handleIsSingleNote}>{children}</StyledPrimaryButton>
+const PrimaryButton = ({ children }) => {
+  return <StyledPrimaryButton>{children}</StyledPrimaryButton>
 }
 
 export default PrimaryButton

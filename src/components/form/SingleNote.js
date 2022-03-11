@@ -27,12 +27,6 @@ const StyledButtonContainer = styled.div`
   display: flex;
 `
 
-// const StyledRouterLink = styled(Link)`
-//   margin-left: 0.5rem;
-//   text-decoration: none;
-//   cursor: pointer;
-// `
-
 const StyledDateButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -65,7 +59,7 @@ const SingleNote = ({ singleNote, setSingleNote, setIsSingleNote, setNotesList, 
   return (
     <StyledNoteContainer>
       {singleNote.map(note => (
-        <div>
+        <div key={note.id}>
           <StyledMarkdownContainer>{note.text}</StyledMarkdownContainer>
           <StyledDateButtonContainer>
             <DateContainer>{noteAddDate}</DateContainer>

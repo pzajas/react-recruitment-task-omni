@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 import PrimaryButton from "../../elements/buttons/PrimaryButton"
@@ -44,6 +44,14 @@ const Form = () => {
   const [singleNote, setSingleNote] = useState([])
   const [isSingleNote, setIsSingleNote] = useState(false)
 
+  useEffect(() => {
+    handleGetLocalStorage()
+  }, [])
+
+  useEffect(() => {
+    handleSaveLocalStorage()
+  }, [notesList])
+
   const handleTextChange = e => {
     setNoteText(e.target.value)
   }
@@ -59,16 +67,28 @@ const Form = () => {
     }
   }
 
+  const handleIsSingleNote = () => {
+    setIsSingleNote(!isSingleNote)
+  }
+
+  const handleSaveLocalStorage = () => {
+    localStorage.setItem("notes", JSON.stringify(notesList))
+  }
+
+  const handleGetLocalStorage = () => {
+    let localStorageNotes = JSON.parse(localStorage.getItem("notes"))
+    if (localStorage.getItem("notes") === null) localStorage.setItem("notes", JSON.stringify([]))
+    else setNotesList(localStorageNotes)
+  }
+
   return (
     <StyledFormContainer>
       <StyledForm onSubmit={handleSubmitNote}>
-        <textarea value={noteText} onChange={handleTextChange} />
+        <textarea placeholder="Add your note here..." value={noteText} onChange={handleTextChange} />
         <StyledButtonContainer>
           {isSingleNote ? (
             <Link to="/">
-              <PrimaryButton isSingleNote={isSingleNote} setIsSingleNote={setIsSingleNote}>
-                Go Back
-              </PrimaryButton>
+              <PrimaryButton onClick={handleIsSingleNote}>Go Back</PrimaryButton>
             </Link>
           ) : (
             <PrimaryButton>Add note</PrimaryButton>
@@ -76,6 +96,7 @@ const Form = () => {
         </StyledButtonContainer>
       </StyledForm>
       <Routes>
+        s
         <Route
           path="/"
           element={

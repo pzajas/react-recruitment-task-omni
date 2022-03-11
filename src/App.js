@@ -1,5 +1,5 @@
-import Form from "./components/form/Form"
 import styled from "styled-components"
+import Form from "./components/form/Form"
 import * as style from "./variables/Variables"
 
 const StyledApplicationContainer = styled.div`

@@ -24,6 +24,7 @@ function App() {
   const [noteText, setNoteText] = useState("")
   const [notesList, setNotesList] = useState([])
   const [singleNote, setSingleNote] = useState([])
+
   return (
     <StyledApplicationContainer>
       <Routes>

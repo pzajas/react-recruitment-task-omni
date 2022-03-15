@@ -1,5 +1,4 @@
 import { format } from "date-fns"
-import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -12,7 +11,6 @@ const StyledNoteContainer = styled.div`
   margin-bottom: 0.5rem;
   color: white;
   width: 50vw;
-
   & * {
     font-size: 0.9rem;
     margin: 0;
@@ -32,7 +30,6 @@ const StyledDateButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-
   button {
     border: none;
     width: 5rem;
@@ -45,7 +42,6 @@ const StyledDateButtonContainer = styled.div`
 
 const StyledButtonContainer = styled.div`
   display: flex;
-
   button {
     margin-left: 0.5rem;
   }
@@ -56,14 +52,10 @@ const DateContainer = styled.div`
   padding: 0.5rem;
 `
 
-const SingleNote = ({ singleNote, setSingleNote, setNotesList, notesList }) => {
-  const [updatedNotesList, setUpdatedNotesList] = useState([])
-
+const SingleNote = ({ singleNote, notesList }) => {
   const handleDeleteSingleNote = () => {
-    setNotesList(notesList.filter(item => !singleNote.includes(item)))
-    setUpdatedNotesList([...notesList])
-
-    localStorage.setItem("notes", JSON.stringify(updatedNotesList))
+    const filteredNotes = notesList.filter(item => item.id !== singleNote[0].id)
+    localStorage.setItem("notes", JSON.stringify(filteredNotes))
   }
 
   const noteAddDate = format(Date.now(), "yyyy-MM-dd")
@@ -78,7 +70,7 @@ const SingleNote = ({ singleNote, setSingleNote, setNotesList, notesList }) => {
               <Link to="/">
                 <button style={{ backgroundColor: "white", color: "black" }}>Go Back</button>
               </Link>
-              <Link to="/" onClick={handleDeleteSingleNote}>
+              <Link to="/">
                 <button onClick={handleDeleteSingleNote}>Delete</button>
               </Link>
             </StyledButtonContainer>

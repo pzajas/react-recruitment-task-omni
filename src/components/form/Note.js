@@ -2,7 +2,6 @@ import { format } from "date-fns"
 import ReactMarkdown from "react-markdown"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import * as style from "../../variables/Variables"
 
 const StyledNoteContainer = styled.div`
   display: flex;

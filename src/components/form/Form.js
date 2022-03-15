@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import styled from "styled-components"
 import PrimaryButton from "../../elements/buttons/PrimaryButton"
-import Note from "./Note"
 
 const StyledFormContainer = styled.div`
   display: flex;
@@ -31,14 +30,14 @@ const StyledButtonContainer = styled.div`
   text-align: right;
 `
 
-const Form = ({ noteText, setNoteText, notesList, setNotesList, singleNote }) => {
+const Form = ({ noteText, setNoteText, notesList, setNotesList }) => {
   useEffect(() => {
     handleGetLocalStorage()
   }, [])
 
   useEffect(() => {
     handleSaveLocalStorage()
-  }, [notesList, singleNote])
+  }, [notesList])
 
   const handleTextChange = e => {
     setNoteText(e.target.value)

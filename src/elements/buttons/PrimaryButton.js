@@ -8,7 +8,7 @@ const StyledPrimaryButton = styled.button`
   cursor: pointer;
 `
 
-const PrimaryButton = ({ children }) => {
+const PrimaryButton = ({ children, isSingleNote, setIsSingleNote }) => {
   return <StyledPrimaryButton>{children}</StyledPrimaryButton>
 }
 

@@ -13,6 +13,7 @@ const StyledNoteContainer = styled.div`
 
   & * {
     margin: 0;
+    font-size: 0.9rem;
   }
 `
 
@@ -22,6 +23,14 @@ const StyledMarkdownContainer = styled(ReactMarkdown)`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+`
+
+const StyledHorizontalLine = styled.div`
+  width: 50%;
+  height: 1px;
+  margin: 1rem 0.5rem;
+  opacity: 0.3;
+  background-color: grey;
 `
 
 const StyledDateButtonContainer = styled.div`
@@ -36,6 +45,7 @@ const StyledDateButtonContainer = styled.div`
     color: whitesmoke;
     background-color: crimson;
     padding: 0.5rem;
+    cursor: pointer;
   }
 `
 
@@ -50,14 +60,13 @@ const StyledRouterLink = styled(Link)`
   cursor: pointer;
 `
 
-const Note = ({ note, notesList, setSingleNote, setNotesList, className, setIsSingleNote }) => {
+const Note = ({ note, notesList, setSingleNote, setNotesList, className }) => {
   const handleDeleteNote = () => {
     setNotesList(notesList.filter(item => item.id !== note.id))
   }
 
   const handleAddSingleNote = () => {
     setSingleNote(notesList.filter(item => item.id === note.id))
-    setIsSingleNote(true)
   }
 
   const noteAddDate = format(Date.now(), "yyyy-MM-dd")
@@ -65,11 +74,11 @@ const Note = ({ note, notesList, setSingleNote, setNotesList, className, setIsSi
   return (
     <StyledNoteContainer className={className}>
       <StyledMarkdownContainer children={note.text} />
+      <StyledHorizontalLine></StyledHorizontalLine>
       <StyledDateButtonContainer>
         <StyledRouterLink to="/single" onClick={handleAddSingleNote}>
           <DateContainer>{noteAddDate}</DateContainer>
         </StyledRouterLink>
-
         <button onClick={handleDeleteNote}>Delete</button>
       </StyledDateButtonContainer>
     </StyledNoteContainer>

@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import React from "react"
+import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -9,22 +9,22 @@ const StyledNoteContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   word-wrap: break-word;
-  background-color: rgb(35, 35, 35);
   margin-bottom: 0.5rem;
   color: white;
   width: 50vw;
 
   & * {
+    font-size: 0.9rem;
     margin: 0;
   }
 `
 
-const StyledMarkdownContainer = styled(ReactMarkdown)`
-  padding: 0.5rem 0.5rem 0rem 0.5rem;
+const SingleNoteContainer = styled.div`
+  background-color: rgb(35, 35, 35);
 `
 
-const StyledButtonContainer = styled.div`
-  display: flex;
+const StyledMarkdownContainer = styled(ReactMarkdown)`
+  padding: 0.5rem 0.5rem 0rem 0.5rem;
 `
 
 const StyledDateButtonContainer = styled.div`
@@ -43,33 +43,47 @@ const StyledDateButtonContainer = styled.div`
   }
 `
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+
+  button {
+    margin-left: 0.5rem;
+  }
+`
+
 const DateContainer = styled.div`
   background-color: rgb(50, 50, 50);
   padding: 0.5rem;
 `
 
-const SingleNote = ({ singleNote, setSingleNote, setIsSingleNote, setNotesList, notesList }) => {
+const SingleNote = ({ singleNote, setSingleNote, setNotesList, notesList }) => {
+  const [updatedNotesList, setUpdatedNotesList] = useState([])
+
   const handleDeleteSingleNote = () => {
-    setSingleNote([])
-    setNotesList(notesList.filter(item => item !== singleNote[0]))
-    setIsSingleNote(false)
+    setNotesList(notesList.filter(item => !singleNote.includes(item)))
+    setUpdatedNotesList([...notesList])
+
+    localStorage.setItem("notes", JSON.stringify(updatedNotesList))
   }
 
   const noteAddDate = format(Date.now(), "yyyy-MM-dd")
   return (
     <StyledNoteContainer>
       {singleNote.map(note => (
-        <div key={note.id}>
+        <SingleNoteContainer key={note.id}>
           <StyledMarkdownContainer>{note.text}</StyledMarkdownContainer>
           <StyledDateButtonContainer>
             <DateContainer>{noteAddDate}</DateContainer>
             <StyledButtonContainer>
               <Link to="/">
+                <button style={{ backgroundColor: "white", color: "black" }}>Go Back</button>
+              </Link>
+              <Link to="/" onClick={handleDeleteSingleNote}>
                 <button onClick={handleDeleteSingleNote}>Delete</button>
               </Link>
             </StyledButtonContainer>
           </StyledDateButtonContainer>
-        </div>
+        </SingleNoteContainer>
       ))}
     </StyledNoteContainer>
   )

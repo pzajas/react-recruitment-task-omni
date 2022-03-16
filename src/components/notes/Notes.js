@@ -10,7 +10,7 @@ const StyledList = styled.li`
   list-style: none;
 `
 
-const List = ({ notesList, setNotesList, setSingleNote, className }) => {
+const Notes = ({ notesList, setNotesList, setSingleNote, className }) => {
   return (
     <StyledListContainer className={className}>
       {notesList.map(note => (
@@ -22,4 +22,4 @@ const List = ({ notesList, setNotesList, setSingleNote, className }) => {
   )
 }
 
-export default List
+export default Notes

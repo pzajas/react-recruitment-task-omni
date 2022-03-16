@@ -2,6 +2,7 @@ import { format } from "date-fns"
 import ReactMarkdown from "react-markdown"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import PrimaryButton from "../../elements/buttons/PrimaryButton"
 
 const StyledNoteContainer = styled.div`
   display: flex;
@@ -30,21 +31,26 @@ const StyledDateButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  button {
+  /* button {
     border: none;
     width: 5rem;
     color: whitesmoke;
     background-color: crimson;
     padding: 0.5rem;
     cursor: pointer;
-  }
+  } */
 `
 
 const StyledButtonContainer = styled.div`
   display: flex;
-  button {
-    margin-left: 0.5rem;
-  }
+`
+
+const StyledPrimaryButtonBack = styled(PrimaryButton)``
+
+const StyledPrimaryButtonDelete = styled(PrimaryButton)`
+  margin-left: 0.5rem;
+  color: white;
+  background-color: crimson;
 `
 
 const DateContainer = styled.div`
@@ -52,7 +58,7 @@ const DateContainer = styled.div`
   padding: 0.5rem;
 `
 
-const SingleNote = ({ singleNote, notesList }) => {
+const ExtendedNote = ({ singleNote, notesList }) => {
   const handleDeleteSingleNote = () => {
     const filteredNotes = notesList.filter(item => item.id !== singleNote[0].id)
     localStorage.setItem("notes", JSON.stringify(filteredNotes))
@@ -68,10 +74,10 @@ const SingleNote = ({ singleNote, notesList }) => {
             <DateContainer>{noteAddDate}</DateContainer>
             <StyledButtonContainer>
               <Link to="/">
-                <button style={{ backgroundColor: "white", color: "black" }}>Go Back</button>
+                <StyledPrimaryButtonBack>Go Back</StyledPrimaryButtonBack>
               </Link>
-              <Link to="/">
-                <button onClick={handleDeleteSingleNote}>Delete</button>
+              <Link to="/" onClick={handleDeleteSingleNote}>
+                <StyledPrimaryButtonDelete>Delete</StyledPrimaryButtonDelete>
               </Link>
             </StyledButtonContainer>
           </StyledDateButtonContainer>
@@ -81,4 +87,4 @@ const SingleNote = ({ singleNote, notesList }) => {
   )
 }
 
-export default SingleNote
+export default ExtendedNote

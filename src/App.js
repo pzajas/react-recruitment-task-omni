@@ -2,8 +2,8 @@ import { useState } from "react"
 import { Route, Routes } from "react-router-dom"
 import styled from "styled-components"
 import Form from "./components/form/Form"
-import List from "./components/form/List"
-import SingleNote from "./components/form/SingleNote"
+import SingleNote from "./components/notes/ExtendedNote"
+import Notes from "./components/notes/Notes"
 import * as style from "./variables/Variables"
 
 const StyledApplicationContainer = styled.div`
@@ -41,7 +41,7 @@ function App() {
                 setNotesList={setNotesList}
                 setSingleNote={setSingleNote}
               />
-              <List
+              <Notes
                 notesList={notesList}
                 singleNote={singleNote}
                 setNotesList={setNotesList}

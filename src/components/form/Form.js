@@ -67,7 +67,12 @@ const Form = ({ noteText, setNoteText, notesList, setNotesList }) => {
   return (
     <StyledFormContainer>
       <StyledForm onSubmit={handleSubmitNote}>
-        <textarea placeholder="Add your note here..." value={noteText} onChange={handleTextChange} />
+        <textarea
+          placeholder="Add your note here..."
+          value={noteText}
+          placeholder="Add a note..."
+          onChange={handleTextChange}
+        />
         <StyledButtonContainer>
           <PrimaryButton>Add note</PrimaryButton>
         </StyledButtonContainer>
